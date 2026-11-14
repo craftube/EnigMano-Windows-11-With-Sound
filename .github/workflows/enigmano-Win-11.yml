@@ -1,3 +1,6 @@
+permissions: contents: write
+
+
 name: "⚡ EnigMano Windows 11 Deployment"
 
 on:
@@ -64,6 +67,18 @@ jobs:
         run: |
           Write-Host "🚦 Initiating EnigMano-Instance.ps1"
           powershell.exe -ExecutionPolicy Bypass -File ".\EnigMano-Instance.ps1"
+
+      - name: Save Files to Repository
+        if: always()
+        shell: powershell
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          New-Item -ItemType Directory -Force -Path "Saved_Files"
+          Copy-Item -Path "$env:USERPROFILE\Desktop\*" -Destination "Saved_Files\" -Recurse -Force -ErrorAction SilentlyContinue
+          git add Saved_Files/
+          git commit -m "Auto-save files before shutdown"
+          git push
 
       - name: 💠 Final Status
         if: always()
