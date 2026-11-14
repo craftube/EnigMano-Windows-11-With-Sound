@@ -1,6 +1,3 @@
-permissions: contents: write
-
-
 name: "⚡ EnigMano Windows 11 Deployment"
 
 on:
@@ -10,6 +7,7 @@ on:
         description: "Instance number to deploy (e.g., 1, 2, 3...)"
         required: true
         default: "1"
+
 
 jobs:
   deploy-enigmano:
